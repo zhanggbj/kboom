@@ -12,9 +12,9 @@ RUN apk add git                                   && \
     go get github.com/ericchiang/k8s              && \
     go get github.com/mhausenblas/kubecuddler     && \
     go get github.com/jamiealquiza/tachymeter     && \
-    mkdir -p /go/src/github.com/mhausenblas/kboom
+    mkdir -p /go/src/github.com/zhanggbj/kboom
 
-WORKDIR /go/src/github.com/mhausenblas/kboom
+WORKDIR /go/src/github.com/zhanggbj/kboom
 
 COPY  . .
 RUN adduser -D -u 10001 kboom \
@@ -23,7 +23,7 @@ RUN adduser -D -u 10001 kboom \
 
 FROM scratch
 COPY --from=build-kubectl /kubectl .
-COPY --from=build-env /go/src/github.com/mhausenblas/kboom/kboom .
+COPY --from=build-env /go/src/github.com/zhanggbj/kboom/kboom .
 COPY --from=build-env /etc/passwd /etc/passwd
 # We need to specify the UID otherwise PSP won't recognize it
 USER 10001
