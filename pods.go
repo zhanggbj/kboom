@@ -59,8 +59,8 @@ func launchPods(client *k8s.Client, namespace, image string, timeoutinsec time.D
 	var podruns []*podrun
 	successfulPods := 0
 	_ = successfulPods
-	rndsrc := rand.New(rand.NewSource(time.Now().UnixNano()))
-	pause := 1 // minimum time between two pod launches
+	//rndsrc := rand.New(rand.NewSource(time.Now().UnixNano()))
+	//pause := 1 // minimum time between two pod launches
 
 	// launch the pods in parallel, with random
 	// pause between 1 sec and 10 sec to avoid
@@ -76,8 +76,9 @@ func launchPods(client *k8s.Client, namespace, image string, timeoutinsec time.D
 		}
 		podruns = append(podruns, pr)
 		go pr.launch()
-		pause = 1 + rndsrc.Intn(10)
-		time.Sleep(time.Duration(pause) * time.Second)
+		//zhanggbj: concurrency
+		//pause = 1 + rndsrc.Intn(10)
+		//time.Sleep(time.Duration(pause) * time.Second)
 	}
 
 	// check every second for successful running pods and capture
